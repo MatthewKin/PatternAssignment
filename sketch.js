@@ -1,4 +1,6 @@
 
+//code reorganized using AI (ant color logic also helped with ai), main ant logic and flocking logic made by me
+
 const CANVAS_WIDTH = 800;
 const CANVAS_HEIGHT = 500;
 
@@ -36,9 +38,9 @@ const antRules = [
 const BACKGROUND = "#080810";
 const GRID_COLOR = "#25223b";
 
-// --------------------------------------------------
+
 // SETUP
-// --------------------------------------------------
+
 
 function setup() {
     const canvas = createCanvas(CANVAS_WIDTH, CANVAS_HEIGHT);
@@ -54,9 +56,8 @@ function setup() {
     updateInterface();
 }
 
-// --------------------------------------------------
 // GRID AND GRAPHICS LAYERS
-// --------------------------------------------------
+
 
 function initializeGrid() {
     cols = floor(width / cellSize);
@@ -124,9 +125,9 @@ function countFilledCells() {
     return total;
 }
 
-// --------------------------------------------------
-// ANT COLORS
-// --------------------------------------------------
+
+// ANT COLORS (this segment mostly made with AI)
+
 
 function getAntColor(id) {
     const startingColors = [
@@ -166,9 +167,8 @@ function hslToHex(h, s, l) {
     return `#${f(0)}${f(8)}${f(4)}`;
 }
 
-// --------------------------------------------------
 // CREATE ANTS
-// --------------------------------------------------
+
 
 function createAnt(x, y) {
     if (ants.length >= MAX_ANTS) {
@@ -245,9 +245,8 @@ function removeAnt() {
     updateInterface();
 }
 
-// --------------------------------------------------
 // DIRECTION HELPERS
-// --------------------------------------------------
+
 
 function getDirectionVector(direction) {
     const directions = [
@@ -287,9 +286,9 @@ function normalizeVector(x, y) {
     };
 }
 
-// --------------------------------------------------
+
 // ALGORITHM 1: LANGTON'S ANT
-// --------------------------------------------------
+
 
 function applyLangtonRule(ant) {
     const filled = grid[ant.x][ant.y] !== null;
@@ -332,9 +331,9 @@ function applyLangtonRule(ant) {
     }
 }
 
-// --------------------------------------------------
+
 // ALGORITHM 2: BOIDS SPATIAL HASH
-// --------------------------------------------------
+
 
 function buildSpatialHash() {
     const bucketSize = BOID_RADIUS;
@@ -494,9 +493,9 @@ function calculateFlocking(ant, spatialHash) {
     return normalizeVector(forceX, forceY);
 }
 
-// --------------------------------------------------
+
 // COMBINE LANGTON + BOIDS
-// --------------------------------------------------
+
 
 function applyFlockingMovement(ant, flockForce) {
     const langton = getDirectionVector(ant.direction);
@@ -534,9 +533,9 @@ function moveAnt(ant) {
     ant.y = (ant.y + direction.y + rows) % rows;
 }
 
-// --------------------------------------------------
+
 // UPDATE SIMULATION
-// --------------------------------------------------
+
 
 function updateAnts() {
     // Build spatial buckets once per simulation update.
@@ -556,9 +555,8 @@ function updateAnts() {
     }
 }
 
-// --------------------------------------------------
+
 // DRAW SIMULATION
-// --------------------------------------------------
 
 function draw() {
     background(BACKGROUND);
@@ -580,9 +578,8 @@ function draw() {
     }
 }
 
-// --------------------------------------------------
+
 // DRAW ANTS
-// --------------------------------------------------
 
 function drawAnts() {
     noStroke();
@@ -615,9 +612,9 @@ function drawAnts() {
     }
 }
 
-// --------------------------------------------------
+
 // MOUSE INTERACTION
-// --------------------------------------------------
+
 
 function mousePressed() {
     if (
@@ -666,9 +663,8 @@ function mousePressed() {
     updateInterface();
 }
 
-// --------------------------------------------------
+
 // RESET
-// --------------------------------------------------
 
 function resetSimulation() {
     clearGrid();
@@ -679,9 +675,9 @@ function resetSimulation() {
     updateInterface();
 }
 
-// --------------------------------------------------
+
 // RANDOMIZE
-// --------------------------------------------------
+
 
 function randomizeSimulation() {
     clearGrid();
@@ -719,9 +715,9 @@ function randomizeSimulation() {
     updateInterface();
 }
 
-// --------------------------------------------------
+
 // INTERFACE
-// --------------------------------------------------
+
 
 function updateInterface() {
     const antCounter = document.getElementById("ant-counter");
@@ -751,9 +747,9 @@ function updateInterface() {
     }
 }
 
-// --------------------------------------------------
+
 // CONTROLS
-// --------------------------------------------------
+
 
 function setupControls() {
     const playButton = document.getElementById("play-button");
